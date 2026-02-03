@@ -1,0 +1,45 @@
+html {
+  background-color: var(--background-color);
+  font-family: var(--main-font);
+  font-size: clamp(16px, 1.3vw, 20px);
+}
+
+*::selection {
+  color: var(--second-color);
+  background-color: #0000006e;
+  text-shadow: none;
+}
+
+body {
+  margin: 0
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+b,
+span,
+strong,
+textarea,
+form,
+input {
+  font-size: 1em;
+}
+
+a,
+br,
+button,
+input,
+img {
+  user-select: none;
+}
+
+a {
+  text-decoration: none;
+  cursor: pointer;
+  transition: color 0.5s ease;
+}

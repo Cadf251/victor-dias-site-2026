@@ -1,0 +1,78 @@
+RewriteEngine On
+Options -Indexes
+
+# =========================
+# BLOQUEIO DE PASTAS INTERNAS
+# =========================
+RewriteRule ^app/ - [F,L]
+RewriteRule ^logs/ - [F,L]
+RewriteRule ^node_modules/ - [F,L]
+RewriteRule ^vendor/ - [F,L]
+RewriteRule ^src/ - [F,L]
+RewriteRule ^templates/ - [F,L]
+
+# =========================
+# REWRITE PRINCIPAL
+# =========================
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-l
+RewriteRule ^([a-zA-Z0-9_-]+)/?$ pages/$1.php [L]
+
+# =========================
+# BLOQUEIO DE ARQUIVOS
+# =========================
+<FilesMatch "^\.gitignore$">
+  Require all denied
+</FilesMatch>
+<FilesMatch "^\.htaccess$">
+  Require all denied
+</FilesMatch>
+<FilesMatch "^\.env$">
+  Require all denied
+</FilesMatch>
+<FilesMatch "^\.env.exemple$">
+  Require all denied
+</FilesMatch>
+<FilesMatch "^README.md$">
+  Require all denied
+</FilesMatch>
+<FilesMatch "^composer.json$">
+  Require all denied
+</FilesMatch>
+<FilesMatch "^composer.lock$">
+  Require all denied
+</FilesMatch>
+<FilesMatch "^package-lock.json$">
+  Require all denied
+</FilesMatch>
+<FilesMatch "^package.json$">
+  Require all denied
+</FilesMatch>
+<FilesMatch "^gulpfile.js$">
+  Require all denied
+</FilesMatch>
+
+# =========================
+# PÁGINAS DE ERRO PERSONALIZADAS
+# =========================
+ErrorDocument 403 /erros/index.php?erro=403
+ErrorDocument 404 /erros/index.php?erro=404
+ErrorDocument 500 /erros/index.php?erro=500
+
+# =========================
+# CACHE DE IMAGENS E FONTES
+# =========================
+<IfModule mod_expires.c>
+  ExpiresActive On
+
+  ExpiresByType text/css "access plus 1 year"
+  ExpiresByType application/javascript "access plus 1 year"
+
+  ExpiresByType image/webp "access plus 1 year"
+  ExpiresByType image/png  "access plus 1 year"
+  ExpiresByType image/jpeg "access plus 1 year"
+  ExpiresByType image/svg+xml "access plus 1 year"
+
+  ExpiresByType font/woff2 "access plus 1 year"
+</IfModule>

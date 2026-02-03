@@ -1,0 +1,27 @@
+{
+    "name": "cadud/empty_project",
+    "description": "",
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Cadf251",
+            "email": "cadu.diasprado07@gmail.com"
+        }
+    ],
+    "require": {
+        "cadud/helpers": "dev-main",
+        "monolog/monolog": "^3.9",
+        "vlucas/phpdotenv": "^5.6",
+        "phpmailer/phpmailer": "^6.10"
+    },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/Cadf251/helpers.git"
+        }
+    ]
+}

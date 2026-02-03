@@ -1,0 +1,7 @@
+.env
+vendor/
+logs/*
+!logs/empty
+node_modules
+public/*/*.map
+public/*/*/.tmp

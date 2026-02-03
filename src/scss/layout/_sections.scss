@@ -1,0 +1,5 @@
+@use "../base/util" as *;
+
+.section{
+  @include section;
+}

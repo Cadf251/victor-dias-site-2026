@@ -1,0 +1,6 @@
+@use "../base/util" as *;
+
+.main{
+  @include section;
+  background-color: var(--off-white);
+}
