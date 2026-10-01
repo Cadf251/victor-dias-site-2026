@@ -62,10 +62,14 @@ $path: "../../public/img/";
 }
 
 // LAYOUT
-@mixin section($pagePadding: 5% 10%){
+@mixin section($pagePadding: 4.5% 2.5%){
   @include box;
-  width: 100vw;
+  width: 100%;
   padding: $pagePadding;
+  display: flex;
+  gap: 48px;
+  flex-direction: column;
+  align-items: flex-start;
 }
 
 @mixin container{

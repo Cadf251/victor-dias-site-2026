@@ -1,13 +1,13 @@
 <?php
 
-use Cadud\Helpers\Html\LoadLayout;
+use App\core\Router;
+use App\Repositories\TextRepository;
 
 require "app/core/bootstrap.php";
 
-$view = [
-  "title" => "Projeto Padrão",
-  "description" => "",
-  "name" => "home"
-];
+$route = filter_input(INPUT_GET, "route") ?? "index";
 
-LoadLayout::loadLayout(TEMPLATES."/layouts/main.php", $view);
+$repo = new TextRepository();
+$GLOBALS["texts"] = $repo->getForView();
+
+Router::load($route);

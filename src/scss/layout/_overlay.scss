@@ -1,0 +1,77 @@
+@use "../base/util" as *;
+
+.overlay {
+  overflow: visible;
+  border: none;
+  position: fixed;
+  top: 0;
+  right: 0;
+  margin: 0 0 0 auto;
+
+  width: 50%;
+  height: 100vh;
+  max-height: 100vh;
+  padding: 3%;
+  background: var(--color-neutral-1000);
+
+  transform: translateX(100%);
+  transition: transform 0.5s ease, opacity 0.5s ease;
+  opacity: 0;
+  display: block; // Necessário para a transição de transform funcionar bem
+  
+  &__content {
+    overflow-y: scroll;
+  }
+
+  &__close {
+    background-color: var(--color-red);
+    border-radius: 8px;
+    width: 24px;
+    height: 48px;
+    cursor: pointer;
+    padding: 4px;
+    font-size: 20px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-neutral-1000);
+    position: absolute;
+    top: 50%;
+    right: 100%;
+    z-index: 999;
+    transform: translate(-8px, -50%);
+  }
+
+  &[open] {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.js--overlay-module {
+  &.is-selected {
+    display: flex !important;
+  }
+}
+
+@media (max-width: $mobile) {
+  .overlay {
+    width: 100%;
+    box-sizing: border-box;
+    padding: calc(24px + 8px + 16px) 16px 16px;
+    margin: 0;
+    max-width: none;
+
+    &__close {
+      width: 24px;
+      height: 24px;
+      padding: 4px;
+      font-size: 16px;
+      top: 4px;
+      left: 4px;
+      right: auto;
+      transform: translate(0);
+    }
+  }
+}

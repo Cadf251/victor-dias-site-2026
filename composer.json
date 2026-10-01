@@ -1,5 +1,5 @@
 {
-    "name": "cadud/empty_project",
+    "name": "cadud/victor-dias-site-2026",
     "description": "",
     "autoload": {
         "psr-4": {
@@ -16,7 +16,8 @@
         "cadud/helpers": "dev-main",
         "monolog/monolog": "^3.9",
         "vlucas/phpdotenv": "^5.6",
-        "phpmailer/phpmailer": "^6.10"
+        "phpmailer/phpmailer": "^6.10",
+        "rakit/validation": "^v1.4.0"
     },
     "repositories": [
         {

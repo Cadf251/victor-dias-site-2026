@@ -1,0 +1,102 @@
+@use "../base/util" as *;
+
+.card {
+  display: flex;
+  padding: 8px 12px;
+  align-items: center;
+  gap: 16px;
+  font-size: 0.9em;
+  position: relative;
+  transition: all .5s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+  }
+
+  &--main {
+    padding: 48px 28px;
+    align-items: center;
+    gap: 16px;
+
+    background: var(--neutral-100-75, rgba(19, 17, 16, 0.75));
+    box-shadow: -2px 0 4px 0 rgba(147, 98, 76, 0.10);
+    
+    &:hover {
+      box-shadow: 0 0 12px var(--color-gray-1000-overlay);
+    }
+  }
+
+  &--problem {
+    padding: 16px;
+    color: var(--color-neutral-1000-80);
+    background: var(--color-main-light-50);
+    transition: all .5s ease !important;
+    
+    &::selection {
+      color: var(--color-terracota);
+    }
+
+    &:hover {
+      background: var(--color-main-light-25);
+    }
+  }
+
+  &--service {
+    display: flex;
+    align-items: stretch;
+    padding: 24px;
+    flex-direction: column;
+    background: var(--color-neutral-500-75);
+    border-radius: 10px;
+    
+    .subtitle {
+      color: var(--color-neutral-1000);
+    }
+
+    .svg-container {
+      background: var(--color-neutral-000-25);
+    }
+  }
+}
+
+svg {
+  width: 28px;
+  height: 28px;
+}
+
+.svg-container {
+  border-radius: 50%;
+  padding: 16px;
+  aspect-ratio: 1;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.firma-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  text-align: center;
+
+  strong {
+    color: var(--color-white-1000);
+  }
+}
+
+@media (max-width: $mobile) {
+  svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  .svg-container {
+    height: 24px;
+    width: 24px;
+    padding: 8px;
+  }
+}

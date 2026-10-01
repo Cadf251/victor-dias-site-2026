@@ -1,17 +1,40 @@
 html {
-  background-color: var(--background-color);
-  font-family: var(--main-font);
-  font-size: clamp(16px, 1.3vw, 20px);
+  background-color: var(--color-areia);
+  font-family: var(--font-primary);
+  font-size: clamp(16px, 1.06vw, 18px);
 }
 
-*::selection {
-  color: var(--second-color);
-  background-color: #0000006e;
-  text-shadow: none;
+* {
+  margin: 0;
+  padding: 0;
+  
+  &::selection {
+    color: var(--color-black-1000-overlay);
+    background-color: #0000004e;
+    text-shadow: none;
+  }
 }
 
 body {
-  margin: 0
+  margin: 0;
+
+  &.is-frozen {
+    overflow: hidden;
+
+    & > *:not(.overlay) {
+      filter: blur(3px);
+    }
+    
+    &::after {
+      content: "";
+      background: var(--color-black-1000);
+      opacity: .75;
+      width: 100vw;
+      height: 100vh;
+      position: fixed;
+      inset: 0;
+    }
+  }
 }
 
 h1,
@@ -26,6 +49,7 @@ span,
 strong,
 textarea,
 form,
+address,
 input {
   font-size: 1em;
 }

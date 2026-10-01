@@ -1,0 +1,97 @@
+@use "../base/util" as *;
+
+.form-container {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 32px;
+
+  .text-container {
+    text-align: center;
+  }
+}
+
+.form-card {
+  display: flex;
+  padding: 32px;
+  flex-direction: column;
+  gap: 24px;
+  border-radius: 8px;
+  background: var(--color-neutral-300-75, rgba(50, 50, 50, 0.75));
+  
+  .button {
+    width: 100%;
+  }
+}
+
+.form-row {
+  display: flex;
+  flex-direction: row;
+  gap: 16px;
+  width: 100%;
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+
+  label {
+    width: 100%;
+    color: var(--color-neutral-1000);
+    padding: 4px;
+    border-radius: 8px;
+    transition: background-color .5s ease;
+
+    &:hover {
+      background-color: var(--color-main-20);
+    }
+  }
+
+  input,
+  select,
+  textarea {
+    font-size: 1em;
+    width: 100%;
+    background: var(--color-neutral-1000);
+    border-radius: 8px;
+    display: flex;
+    padding: 10.4px;
+    border: 1.6px solid var(--color-neutral-900);
+    align-items: center;
+    transition: border .5s ease;
+    box-sizing: border-box;
+
+    &:hover {
+      border: 1.6px solid var(--color-black-900);
+    }
+
+    &:focus {
+      outline: 1.6px solid var(--color-golden);
+      border: 1.6px solid var(--color-golden);
+    }
+
+    &::selection {
+      color: var(--color-black-900);
+    }
+
+    &.is-not-valid {
+      border: 1.6px solid var(--color-red) !important;
+      outline: 1.6px solid var(--color-red) !important;
+    }
+
+    &.is-valid {
+      border: 1.6px solid var(--color-green) !important;
+      outline: 1.6px solid var(--color-green) !important;
+    }
+  }
+}
+
+@media (max-width: $mobile) {
+
+  .form-card {
+    padding: 32px 16px;
+
+  }
+}

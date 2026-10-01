@@ -1,0 +1,69 @@
+@use "../base/util" as *;
+
+.nav {
+  display: flex;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 16px 10% 16px 10%;
+  justify-content: space-between;
+  font-size: 0.875rem;
+  align-items: center;
+  position: absolute;
+  z-index: 990;
+
+  &__empresa {
+    img {
+      height: 50px;
+      width: auto;
+    }
+  }
+
+  &__controller {
+    svg {
+      display: none !important;
+    }
+  }
+
+  &__menu {
+    display: flex;
+    gap: 16px;
+  }
+}
+
+@media (max-width: $mobile) {
+  .nav {
+    &__empresa {
+      img {
+        content: url("#{$path}simbolo-400.webp");
+      }
+    }
+
+    &__controller {
+      svg {
+        display: block !important;
+        fill: var(--color-neutral-1000);
+        width: 18px;
+        height: 18px;
+      }
+    }
+
+    &__menu {
+      flex-direction: column;
+      opacity: 0;
+      pointer-events: none;
+      padding: 24px;
+      background-color: var(--color-neutral-100-75, rgba(19, 17, 16, .75));
+      position: absolute;
+      bottom: 0;
+      transform: translateY(calc(100% + 8px));
+      right: 16px;
+      transition:
+        opacity .5s ease;
+    }
+  }
+
+  .is-opened {
+    pointer-events: all;
+    opacity: 1;
+  }
+}
