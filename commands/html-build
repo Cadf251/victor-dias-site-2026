@@ -1,0 +1,14 @@
+<?php
+
+use Cadud\Helpers\Build\HTMLBuilder;
+
+require_once "core/bootstrap.php";
+
+try {
+  $htmlBuild = new HTMLBuilder(APP_ROOT . "/storage/build/resources/input.json", APP_ROOT . "/storage/build/result");
+  $htmlBuild->build();
+} catch (Exception $e) {
+  die($e->getMessage());
+}
+
+echo "HTML buildado";

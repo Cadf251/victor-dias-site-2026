@@ -1,0 +1,14 @@
+<?php
+
+use Cadud\Helpers\Build\TokenBuilder;
+
+require_once "core/bootstrap.php";
+
+try {
+  $builder = new TokenBuilder(APP_ROOT . "/storage/build/resources/colors.json", APP_ROOT . "/storage/build/result/colors.css");
+  $builder->build();
+} catch (Exception $e) {
+  die($e->getMessage());
+}
+
+echo "Tokens buildados";

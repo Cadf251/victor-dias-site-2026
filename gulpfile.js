@@ -12,25 +12,25 @@ const sourcemaps = require("gulp-sourcemaps");
 const esbuild = require("esbuild");
 const browserSync = require('browser-sync').create();
 const svgSprite = require('gulp-svg-sprite');
-const gulpIf = require('gulp-if');
+const rename = require("gulp-rename");
 
 // -------------------------
 // PATHS
 // -------------------------
 const paths = {
-  scss: "src/scss/**/*.scss",
-  js: "src/js/**/*.js",
-  img: "src/img/**/*.{jpg,jpeg,png}",
-  imgWebp: "src/img/**/*.{webp,avif,.ico}",
+  scss: "resources/scss/**/*.scss",
+  js: "resources/js/**/*.js",
+  img: "resources/img/**/*.{jpg,jpeg,png}",
+  imgWebp: "resources/img/**/*.{webp,avif,ico}",
   distCss: "public/css/",
   distJs: "public/js/",
   distImg: "public/img/",
   php: "**/*.php",
-  fonts: "src/fonts/**/*.woff2",
+  fonts: "resources/fonts/**/*.woff2",
   distFonts: "public/fonts/",
-  jquery: "src/jquery/*.js",
+  jquery: "resources/jquery/jquery-3.7.1.min.js",
   distJquery: "public/js/",
-  icons: "src/img/icons/*.svg"
+  icons: "resources/img/icons/*.svg"
 };
 
 // -------------------------
@@ -38,7 +38,7 @@ const paths = {
 // -------------------------
 function serve(done) {
   browserSync.init({
-    proxy: "http://localhost/",
+    proxy: "http://localhost/empty_project/",
     open: false,
     notify: false
   });
@@ -54,11 +54,14 @@ function reload(done) {
 // COMPILA SCSS → CSS MINIFICADO
 // -------------------------
 function buildSCSS() {
-  return src("src/scss/main.scss")
+  // Todos os arquivos de scss
+  return src("resources/scss/*.scss")
     .pipe(sourcemaps.init())
     .pipe(sass().on("error", sass.logError))
     .pipe(cleanCSS())
-    .pipe(concat("main.min.css"))
+    // Remove o concat("main.min.css")
+    // Rename serve para adicionar o sufixo .min
+    .pipe(rename({ suffix: '.min' }))
     .pipe(sourcemaps.write("."))
     .pipe(dest(paths.distCss));
 }
@@ -68,7 +71,7 @@ function buildSCSS() {
 // -------------------------
 async function buildJS() {
   await esbuild.build({
-    entryPoints: ["src/js/main.js"],
+    entryPoints: ["resources/js/main.js"],
     outfile: "public/js/main.min.js",
     minify: true,
     bundle: true,
@@ -91,13 +94,7 @@ function copyJquery() {
 // -------------------------
 function convertImg() {
   return src(paths.img)
-    .pipe(gulpIf(
-      file => file.relative.includes('hero'), 
-      
-      webp({ quality: 100, lossless: true }), 
-      
-      webp({ quality: 85 }) 
-    ))
+    .pipe(webp({ quality: 85 }))
     .pipe(dest(paths.distImg));
 }
 
@@ -136,7 +133,6 @@ function copyFonts() {
   return src(paths.fonts)
     .pipe(dest(paths.distFonts));
 }
-
 
 // -------------------------
 // WATCH

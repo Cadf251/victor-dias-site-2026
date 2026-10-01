@@ -1,78 +1,66 @@
 RewriteEngine On
 Options -Indexes
 
-# =========================
-# BLOQUEIO DE PASTAS INTERNAS
-# =========================
-RewriteRule ^app/ - [F,L]
-RewriteRule ^logs/ - [F,L]
-RewriteRule ^node_modules/ - [F,L]
-RewriteRule ^vendor/ - [F,L]
-RewriteRule ^src/ - [F,L]
-RewriteRule ^templates/ - [F,L]
-
-# =========================
-# REWRITE PRINCIPAL
-# =========================
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-l
-RewriteRule ^([a-zA-Z0-9_-]+)/?$ index.php?route=$1 [L]
-
-# =========================
-# BLOQUEIO DE ARQUIVOS
-# =========================
-<FilesMatch "^\.gitignore$">
-  Require all denied
-</FilesMatch>
-<FilesMatch "^\.htaccess$">
-  Require all denied
-</FilesMatch>
-<FilesMatch "^\.env$">
-  Require all denied
-</FilesMatch>
-<FilesMatch "^\.env.exemple$">
-  Require all denied
-</FilesMatch>
-<FilesMatch "^README.md$">
-  Require all denied
-</FilesMatch>
-<FilesMatch "^composer.json$">
-  Require all denied
-</FilesMatch>
-<FilesMatch "^composer.lock$">
-  Require all denied
-</FilesMatch>
-<FilesMatch "^package-lock.json$">
-  Require all denied
-</FilesMatch>
-<FilesMatch "^package.json$">
-  Require all denied
-</FilesMatch>
-<FilesMatch "^gulpfile.js$">
-  Require all denied
+# ==========================================
+# 1. SEGURANÇA: BLOQUEIO DE ARQUIVOS E PASTAS
+# ==========================================
+<FilesMatch "^\.(gitignore|htaccess|env.*)$|^README\.md$|^(composer|package)\.(json|lock)$|^gulpfile\.js$">
+    Require all denied
 </FilesMatch>
 
-# =========================
-# PÁGINAS DE ERRO PERSONALIZADAS
-# =========================
+# Se o cara tentar acessar pastas estruturais, toma um Block
+RewriteRule ^(app|node_modules|resources|storage|vendor)/ - [F,L]
+
+
+# ==========================================
+# 2. SE FOR ARQUIVO REAL (JS, CSS, IMG), ENTREGA DIRETO
+# ==========================================
+# Se o arquivo existe na pasta public ou na raiz, para o Apache aqui e entrega
+RewriteCond %{DOCUMENT_ROOT}/public/$1 -f [OR]
+RewriteCond %{REQUEST_FILENAME} -f
+RewriteRule ^(.*)$ - [L]
+
+
+# ==========================================
+# 3. MODO DESENVOLVIMENTO (LOCALHOST)
+# ==========================================
+# SE ESTIVER NO LOCALHOST, MANDA DIRETO PRO PHP E PULA O CACHE ESTÁTICO
+# RewriteCond %{HTTP_HOST} ^(localhost|127\.0\.0\.1|template\.local)$ [NC]
+# RewriteRule ^(.*)$ index.php?url=$1 [L,QSA]
+
+# ==========================================
+# 4. MODO PRODUÇÃO: SE O HTML CACHEADO EXISTIR, ENTREGA
+# ==========================================
+# Se a URL for a Home (/), checa public/index.html
+RewriteCond %{REQUEST_URI} ^/$
+RewriteCond %{DOCUMENT_ROOT}/public/html/index.html -f
+RewriteRule ^$ public/index.html [L]
+
+# Se for qualquer outra subrota (ex: /sobre), checa public/sobre/index.html
+# Nota: $1 pega o termo sem a barra inicial, resolvendo o problema das duas barras!
+RewriteCond %{DOCUMENT_ROOT}/public/html/$1/index.html -f
+RewriteRule ^(.*)$ public/$1/index.html [L]
+
+# ==========================================
+# 5. FALLBACK: SE NÃO CAIU EM NADA ACIMA, MANDA PRO PHP
+# ==========================================
+RewriteRule ^(.*)$ index.php?url=$1 [L,QSA]
+
+
+# ==========================================
+# PÁGINAS DE ERRO E CONFIGURAÇÕES DE EXPIRES
+# ==========================================
 ErrorDocument 403 /erros/index.php?erro=403
 ErrorDocument 404 /erros/index.php?erro=404
 ErrorDocument 500 /erros/index.php?erro=500
 
-# =========================
-# CACHE DE IMAGENS E FONTES
-# =========================
 <IfModule mod_expires.c>
-  ExpiresActive On
-
-  ExpiresByType text/css "access plus 1 year"
-  ExpiresByType application/javascript "access plus 1 year"
-
-  ExpiresByType image/webp "access plus 1 year"
-  ExpiresByType image/png  "access plus 1 year"
-  ExpiresByType image/jpeg "access plus 1 year"
-  ExpiresByType image/svg+xml "access plus 1 year"
-
-  ExpiresByType font/woff2 "access plus 1 year"
+    ExpiresActive On
+    ExpiresByType text/css "access plus 1 year"
+    ExpiresByType application/javascript "access plus 1 year"
+    ExpiresByType image/webp "access plus 1 year"
+    ExpiresByType image/png  "access plus 1 year"
+    ExpiresByType image/jpeg "access plus 1 year"
+    ExpiresByType image/svg+xml "access plus 1 year"
+    ExpiresByType font/woff2 "access plus 1 year"
 </IfModule>

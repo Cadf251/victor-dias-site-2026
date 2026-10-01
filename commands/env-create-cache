@@ -1,0 +1,18 @@
+<?php
+
+use Cadud\Helpers\Cache\ENVCompiler;
+
+require_once "core/bootstrap.php";
+
+try {
+  $env = new ENVCompiler(APP_ROOT . "/storage/cache/env.php");
+  $compiled = $env->compile();
+
+  if (!$compiled) {
+    throw new Exception("Não foi possível compilar");
+  }
+} catch (Exception $e) {
+  die($e->getMessage());
+}
+
+echo "Cache do ENV criado \n";

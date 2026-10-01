@@ -1,7 +1,15 @@
 .env
 vendor/
-logs/*
-!logs/empty
+
+storage/app/*
+!storage/app/empty
+
+storage/cache/*
+!storage/cache/empty
+
+storage/logs/*
+!storage/logs/empty
+
 node_modules
 public/*/*.map
 public/*/*/.tmp

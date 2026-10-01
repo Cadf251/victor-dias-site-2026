@@ -1,0 +1,4 @@
+<?php
+
+include_once 'env-clear-cache';
+include_once 'html-clear-cache';

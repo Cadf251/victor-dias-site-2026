@@ -1,13 +1,11 @@
 <?php
 
-use App\core\Router;
-use App\Repositories\TextRepository;
+use Cadud\Helpers\Core\Routing\Router;
 
-require "app/core/bootstrap.php";
+require "core/bootstrap.php";
 
-$route = filter_input(INPUT_GET, "route") ?? "index";
+require "core/routes/web.php";
 
-$repo = new TextRepository();
-$GLOBALS["texts"] = $repo->getForView();
+$route = filter_input(INPUT_GET, "route") ?? "/";
 
-Router::load($route);
+Router::run($route);

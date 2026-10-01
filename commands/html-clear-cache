@@ -1,0 +1,14 @@
+<?php
+
+use Cadud\Helpers\Cache\HTMLCompiler;
+
+require_once "core/bootstrap.php";
+
+try {
+  $html = new HTMLCompiler(APP_ROOT . '/public/html');
+  $html->clear();
+} catch (Exception $e) {
+  die($e->getMessage());
+}
+
+echo "Cache de HTML limpo \n";
